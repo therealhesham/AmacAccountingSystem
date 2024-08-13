@@ -27,7 +27,7 @@ Transacaction(@Req() req:Request,@Res() res:Response){
   console.log("asdadspasdkoapoodkaopdkaopdskspodskapodkaopdkaioqdoizapomam")
 console.log(req.body)
     const {CreditName,DebitName,CreditAmount,DebitAmount}=req.body;
-    // if (CreditAmount != DebitAmount) return res.send("")
+    if (CreditAmount != DebitAmount) return res.send("")
     return this.doubleentryservice.Transact(CreditName,DebitName,Number(CreditAmount),Number(DebitAmount))
 }
 

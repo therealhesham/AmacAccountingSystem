@@ -44,3 +44,15 @@ CreditAmount Int
 DebitAmount Int
 
 }
+
+
+
+model Benefiary {
+
+id Int @id @default(autoincrement())
+Name String
+Type String
+
+
+
+}
