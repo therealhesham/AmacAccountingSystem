@@ -8,10 +8,14 @@ import { DoubleEntryModule } from './doubleentry/double_entry.module';
 import { BenefiaryController } from './benefiary/benefiary.controller';
 import { BenefiaryService } from './benefiary/benefiary.service';
 import { BenefiaryModule } from './benefiary/benefiary.module';
+// import { AssetService } from './asset/assets.service';
+import { AssetsService } from './assets/assets.service';
+import { AssetsController } from './assets/assets.controller';
+import { AssetsModule } from './assets/assets.module';
 
 @Module({
-  imports: [UserModule, DoubleEntryModule, BenefiaryModule],
-  controllers: [AppController, DoubleEntryController, BenefiaryController],
-  providers: [AppService, DoubleEntryService, BenefiaryService],
+  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule],
+  controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController],
+  providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService],
 })
 export class AppModule {}

@@ -18,7 +18,9 @@ model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
-}
+  // creadted Double_Entry
+  Created Double_Entry?
+  }
 
 
 model Bank_Account{
@@ -42,9 +44,16 @@ CreditName String
 DebitName String
 CreditAmount Int
 DebitAmount Int
+// CreatedBy User?
+user User @relation(fields: [id],references: [id])
+}
+model Asset{
+  id        Int     @id @default(autoincrement())
+  AssetName String
+  Cost      Int
+
 
 }
-
 
 
 model Benefiary {
