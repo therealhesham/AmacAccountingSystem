@@ -8,8 +8,8 @@ export class BenefiaryService {
 async AddBeneficiary(Name,Type){
 console.log(Name,Type)
 // newPrisma.benefiary.?
-await newPrisma.benefiary.create({data:{Name:Name,Type:Type}})
- return "create"   
+const waiter =  newPrisma.benefiary.create({data:{Name:Name,Type:Type}})
+ return    waiter
 }
 
 

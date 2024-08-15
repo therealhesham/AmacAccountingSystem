@@ -19,7 +19,7 @@ model User {
   email String  @unique
   name  String?
   // creadted Double_Entry
-  Created Double_Entry?
+  // Created Double_Entry?
   }
 
 
@@ -45,7 +45,7 @@ DebitName String
 CreditAmount Int
 DebitAmount Int
 // CreatedBy User?
-user User @relation(fields: [id],references: [id])
+// user User @relation(fields: [id],references: [id])
 }
 model Asset{
   id        Int     @id @default(autoincrement())

@@ -20,10 +20,11 @@ return this.doubleentryservice.gettransactions()
 }
 
 @Post("/")
-Transacaction(@Req() req:Request,@Res() res:Response){
+async Transacaction(@Req() req:Request,@Res() res:Response){
     const {CreditName,DebitName,CreditAmount,DebitAmount}=req.body;
-    if (CreditAmount != DebitAmount) return res.send("");
-    return this.doubleentryservice.Transact(CreditName,DebitName,Number(CreditAmount),Number(DebitAmount));
+    const  DBResponse =await this.doubleentryservice.Transact(CreditName,DebitName,Number(CreditAmount),Number(DebitAmount));
+if (DBResponse == "error")  return res.status(301).json(DBResponse)
+res.send(DBResponse)
 }
 
 

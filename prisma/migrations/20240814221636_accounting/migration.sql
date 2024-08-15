@@ -56,6 +56,3 @@ CREATE TABLE "Benefiary" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- AddForeignKey
-ALTER TABLE "Double_Entry" ADD CONSTRAINT "Double_Entry_id_fkey" FOREIGN KEY ("id") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
