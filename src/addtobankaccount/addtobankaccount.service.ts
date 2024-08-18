@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 @Injectable()
 export class AddtobankaccountService {
 
+    
 
 async AddFund(req,res){
     const today = new Date().toLocaleDateString();

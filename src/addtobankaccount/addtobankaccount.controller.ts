@@ -6,13 +6,10 @@ import { AddtobankaccountService } from './addtobankaccount.service';
 export class AddtobankaccountController {
 
 constructor(public AddtobankaccountService : AddtobankaccountService){
-
-
 }
 
 @Get("/")
 Addfund(@Req()req:Request,@Res() res:Response){
-
     return    this.AddtobankaccountService.AddFund(req,res)
 
 
