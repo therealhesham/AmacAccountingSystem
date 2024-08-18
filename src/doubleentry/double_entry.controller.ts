@@ -21,8 +21,8 @@ return this.doubleentryservice.gettransactions()
 
 @Post("/")
 async Transacaction(@Req() req:Request,@Res() res:Response){
-    const {CreditName,DebitName,CreditAmount,DebitAmount}=req.body;
-    const  DBResponse =await this.doubleentryservice.Transact(CreditName,DebitName,Number(CreditAmount),Number(DebitAmount));
+    const {CreditName,DebitName,CreditAmount,DebitAmount,Notes}=req.body;
+    const  DBResponse =await this.doubleentryservice.Transact(CreditName,DebitName,Number(CreditAmount),Number(DebitAmount),Notes);
 if (DBResponse == "error")  return res.status(301).json(DBResponse)
 res.send(DBResponse)
 }

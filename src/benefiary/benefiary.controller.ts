@@ -5,18 +5,17 @@ import { PrismaClient } from '@prisma/client';
 @Controller('/benefiary')
 export class BenefiaryController {
 
-constructor(private BenefiaryService:BenefiaryService){
+constructor(public BenefiaryService:BenefiaryService){
 
 
 }
 
 @Get("/")
-GetBeneficiary(){
+GetBeneficiary(@Res() res:Response){
 
-const newclient= new PrismaClient()
-const finder = newclient.benefiary.findMany()
 
-return finder
+return this.BenefiaryService.GetBeneficiary(res);
+
 }
 
 @Post("/")

@@ -9,13 +9,13 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   name  String?
   // creadted Double_Entry
@@ -24,7 +24,7 @@ model User {
 
 
 model Bank_Account{
-  id    Int     @id @default(autoincrement())
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   BankName String
   Type     String
   Quantity Float
@@ -32,23 +32,22 @@ model Bank_Account{
 
 model Safe{
 
-  id    Int     @id @default(autoincrement())
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   Quantity Float
 
 }
 
 
 model Double_Entry{
-id    Int     @id @default(autoincrement())
+id    String @id @default(auto()) @map("_id") @db.ObjectId
 CreditName String
 DebitName String
 CreditAmount Int
 DebitAmount Int
-// CreatedBy User?
-// user User @relation(fields: [id],references: [id])
+Notes       String
 }
 model Asset{
-  id        Int     @id @default(autoincrement())
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
   AssetName String
   Cost      Int
 
@@ -58,7 +57,7 @@ model Asset{
 
 model Benefiary {
 
-id Int @id @default(autoincrement())
+id    String @id @default(auto()) @map("_id") @db.ObjectId
 Name String
 Type String
 

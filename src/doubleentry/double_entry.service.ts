@@ -11,11 +11,11 @@ gettransactions(){
     return prisma.double_Entry.findMany()
 }
 
-async Transact( CreditName,DebitName,CreditAmount,DebitAmount){
+async Transact( CreditName,DebitName,CreditAmount,DebitAmount,Notes){
 
 if(CreditAmount != DebitAmount) return  "error";      
 
-    const waiter = await prisma.double_Entry.create({data:{CreditAmount,CreditName,DebitAmount,DebitName}})
+    const waiter = await prisma.double_Entry.create({data:{CreditAmount,CreditName,DebitAmount,DebitName,Notes}})
 
 
     return waiter;
