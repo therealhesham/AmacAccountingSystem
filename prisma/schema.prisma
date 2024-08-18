@@ -28,6 +28,7 @@ model Bank_Account{
   BankName String
   Type     String
   Quantity Float
+  Date     String
 }
 
 model Safe{
