@@ -25,25 +25,29 @@ model User {
 
 model Bank_Account{
   id    String @id @default(auto()) @map("_id") @db.ObjectId
-  BankName String
-  Type     String
+  BankName String?
+  Type     String?
   Quantity Float
-  Date     String
+  Date     String?
 }
 
 model Safe{
 
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   Quantity Float
-
+  Name     String?
+  Date     String?
 }
 
 
 model Double_Entry{
+
 id    String @id @default(auto()) @map("_id") @db.ObjectId
+CreditType String
 CreditName String
 DebitName String
 CreditAmount Int
+
 DebitAmount Int
 Notes       String
 }
