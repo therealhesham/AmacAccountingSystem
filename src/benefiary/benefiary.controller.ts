@@ -2,6 +2,8 @@ import {Post,Get, Controller,Req,Res } from '@nestjs/common';
 import { Request,Response } from 'express';
 import { BenefiaryService } from './benefiary.service';
 import { PrismaClient } from '@prisma/client';
+
+
 @Controller('/benefciary')
 export class BenefiaryController {
 
@@ -10,7 +12,7 @@ constructor(public BenefiaryService:BenefiaryService){
 
 }
 
-@Get("/")
+@Get("/get")
 GetBeneficiary(@Res() res:Response){
 
 

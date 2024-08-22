@@ -28,7 +28,7 @@ model Bank_Account{
   BankName String?
   Type     String?
   Quantity Float
-  Date     String?
+  Date     String?  @unique
 }
 
 model Safe{
@@ -36,20 +36,21 @@ model Safe{
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   Quantity Float
   Name     String?
-  Date     String?
+  Date     String? @unique
 }
 
 
 model Double_Entry{
 
 id    String @id @default(auto()) @map("_id") @db.ObjectId
-CreditType String
+CreditType String?
 CreditName String
 DebitName String
 CreditAmount Int
 
 DebitAmount Int
-Notes       String
+Notes       String?
+date        String?
 }
 model Asset{
   id    String @id @default(auto()) @map("_id") @db.ObjectId
@@ -63,9 +64,9 @@ model Asset{
 model Benefiary {
 
 id    String @id @default(auto()) @map("_id") @db.ObjectId
-Name String
-Type String
-
+Name String? @unique
+Type String?
+Amount Int?
 
 
 }
