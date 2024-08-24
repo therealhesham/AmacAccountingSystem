@@ -7,7 +7,7 @@ import { Prisma, PrismaClient } from '@prisma/client';
 async function bootstrap() {
 
   const app = await NestFactory.create(AppModule,{cors:true});
-  app.enableCors();
+  app.enableCors({origin:"https://amacwindmill-dashboard-react.vercel.app"});
 await app.listen(process.env.PORT || 3003);
 }
 bootstrap();
