@@ -14,9 +14,10 @@ import { AssetsController } from './assets/assets.controller';
 import { AssetsModule } from './assets/assets.module';
 import { AddtobankaccountModule } from './addtobankaccount/addtobankaccount.module';
 import { SafeModule } from './safe/safe.module';
+import { LegacyDoubleEntryModule } from './legacy-double-entry/legacy-double-entry.module';
 
 @Module({
-  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule],
+  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule],
   controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController],
   providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService],
 })

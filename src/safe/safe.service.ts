@@ -4,10 +4,23 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
 @Injectable()
 export class SafeService {
-
-
     
+async AvailableCash (req,res){
+try {
+    const today = new Date().toLocaleDateString();
+    
+const finder = await prisma.safe.findFirst({where:{Date:today}})
+res.status(200).json(finder.Quantity)
 
+} catch (error) {
+//    console.log(error) 
+res.status(301).json(0)
+
+
+}
+
+
+}
     async AddFund(req,res){
     
     try {

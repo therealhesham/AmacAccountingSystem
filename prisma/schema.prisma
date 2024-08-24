@@ -51,7 +51,41 @@ CreditAmount Int
 DebitAmount Int
 Notes       String?
 date        String?
+settled      Boolean?
+unix_time_stamp DateTime @default(now())
+transferred   Boolean?
+
 }
+
+
+model Transfering{
+id              String @id @default(auto()) @map("_id") @db.ObjectId
+unix_timestamp  String      
+status          Boolean?
+bankaccount     String?  @unique @db.ObjectId
+safe            String?   @unique @db.ObjectId
+
+
+
+  
+}
+model Legacy_Double_Entry{
+
+id    String @id @default(auto()) @map("_id") @db.ObjectId
+CreditType String?
+CreditName String
+DebitName String
+CreditAmount Int
+
+DebitAmount Int
+Notes       String?
+date        String?
+settled      Boolean?
+unix_time_stamp DateTime @default(now())
+transferred   Boolean?
+
+}
+
 model Asset{
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   AssetName String

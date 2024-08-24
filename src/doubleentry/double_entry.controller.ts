@@ -13,6 +13,15 @@ constructor(public doubleentryservice:DoubleEntryService){
 
 
 
+@Get("/total")
+TotalOfPettyCash(@Req() req : Request,@Res( ) res:Response){
+
+return this.doubleentryservice.Total(req,res)
+}
+
+
+
+
 @Get("/")
 GetTransactions(){
 

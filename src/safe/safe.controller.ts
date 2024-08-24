@@ -8,6 +8,19 @@ export class SafeController
 constructor(private safeService:SafeService){}
 
 
+
+
+@Get("/findcash")
+async Cash(@Req() req:Request,@Res() res:Response){
+
+return this.safeService.AvailableCash(req,res)
+
+
+}
+
+
+
+
 @Post("/")
 Addfund(@Req() req:Request,@Res() res:Response){
 

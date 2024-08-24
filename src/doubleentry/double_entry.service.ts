@@ -7,6 +7,12 @@ export class DoubleEntryService {
 
 
 
+async Total(req,res){
+const waiter = await prisma.double_Entry.aggregate({_sum:{CreditAmount:true},where:{CreditType:"عهدة",settled :false}})
+
+res.status(200).json(waiter)
+}
+
 async gettransactions(){
     return await prisma.double_Entry.findMany()
 }
