@@ -3,6 +3,7 @@ import { Request ,Response} from 'express';
 import { AddtobankaccountService } from './addtobankaccount.service';
 import { AccountsystemGuard } from 'src/accountsystem/accountsystem.guard';
 
+
 @Controller('bankaccount')
 export class AddtobankaccountController {
 
