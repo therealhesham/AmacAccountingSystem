@@ -4,7 +4,7 @@ import { AddtobankaccountService } from './addtobankaccount.service';
 import { AccountsystemGuard } from 'src/accountsystem/accountsystem.guard';
 
 
-@Controller('bankaccount')
+@Controller('/bankaccount')
 export class AddtobankaccountController {
 
 constructor(public AddtobankaccountService : AddtobankaccountService){
