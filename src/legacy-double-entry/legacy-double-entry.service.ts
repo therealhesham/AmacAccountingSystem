@@ -9,8 +9,15 @@ const findAll = await prisma.double_Entry.findMany()
    
 const moveToLegacy = await prisma.legacy_Double_Entry.createMany({data:findAll})
 const deleteAll = await prisma.double_Entry.deleteMany()
+const find = await prisma.safe.findMany()
+ 
+const waiter =await prisma.safe.create({data:{Quantity:find[find.length-1].Quantity+0,Date:new Date().toLocaleDateString()}})
 
-console.log(moveToLegacy)
+const findBankAccount = await prisma.safe.findMany()
+ 
+const waiterBank =await prisma.bank_Account.create({data:{Quantity:findBankAccount[findBankAccount.length-1].Quantity+0,Date:new Date().toLocaleDateString()}})
+console.log("done")
+
 }
 
 }

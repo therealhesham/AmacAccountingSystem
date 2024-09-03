@@ -1,4 +1,4 @@
-import {Post,Get, Controller,Req,Res } from '@nestjs/common';
+import {Post,Get, Controller,Req,Res, Param } from '@nestjs/common';
 import { Request,Response } from 'express';
 import { BenefiaryService } from './benefiary.service';
 import { PrismaClient } from '@prisma/client';
@@ -17,6 +17,20 @@ GetBeneficiary(@Res() res:Response){
 
 
 return this.BenefiaryService.GetBeneficiary(res);
+
+}
+
+@Get("/totalamount/:id")
+FindTotal(@Param() param:string , @Res() res:Response){
+// new PrismaClient().pettyCash.deleteMany()
+return this.BenefiaryService.GetTotalAmount(param,res)
+
+}
+
+@Get("/:id")
+FindNotSettled(@Param() param:string , @Res() res:Response){
+// new PrismaClient().pettyCash.deleteMany()
+return this.BenefiaryService.FindNotSettled(param,res)
 
 }
 

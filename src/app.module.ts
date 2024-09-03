@@ -15,9 +15,12 @@ import { AssetsModule } from './assets/assets.module';
 import { AddtobankaccountModule } from './addtobankaccount/addtobankaccount.module';
 import { SafeModule } from './safe/safe.module';
 import { LegacyDoubleEntryModule } from './legacy-double-entry/legacy-double-entry.module';
+import { SuppliersModule } from './suppliers/suppliers.module';
+import { SettlementModule } from './settlement/settlement.module';
+import { ContractorModule } from './contractor/contractor.module';
 
 @Module({
-  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule],
+  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule],
   controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController],
   providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService],
 })

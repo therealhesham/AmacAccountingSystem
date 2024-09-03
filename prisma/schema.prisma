@@ -23,6 +23,32 @@ model User {
   }
 
 
+
+model Deposit{
+id String @id @default(auto()) @map("_id") @db.ObjectId
+SupplierName String 
+SupplierNameID String ?
+Date          String
+Amount String? // what he got
+Quantity String? //what he supplied as a material
+
+
+
+}
+
+
+model Supplier{
+id String @id @default(auto()) @map("_id") @db.ObjectId
+Name String @unique
+Type String?
+Date  String?
+Amount Float? @default(0)// what he got 
+Quantity String? //what he supplied as a material
+Unit  String? 
+Price String?
+RealAmount Float?
+
+}
 model Bank_Account{
   id    String @id @default(auto()) @map("_id") @db.ObjectId
   BankName String?
@@ -56,6 +82,7 @@ unix_time_stamp DateTime @default(now())
 transferred   Boolean?
 
 }
+
 
 
 model Transfering{
@@ -96,11 +123,36 @@ model Asset{
 
 
 model Benefiary {
-
 id    String @id @default(auto()) @map("_id") @db.ObjectId
-Name String? @unique
+Name String @unique
 Type String?
-Amount Int?
+Amount Int? 
+Clauses Settlement[]
+NewpettyCash PettyCash[]
+}
+model Settlement{
+id    String @id @default(auto()) @map("_id") @db.ObjectId
+Clauses String
+Amount  Float
+BeneficiaryID Benefiary @relation(fields: [BenefciaryID],references: [Name])
+BenefciaryID String 
+Date    String
+
+}
+model Contractor{
 
 
+  id String @db.ObjectId @map("_id") @id @default(auto())
+
+
+  
+}
+model PettyCash{
+amount Float
+Name String?
+Date String
+id String @id @default(auto()) @map("_id") @db.ObjectId 
+Benefciary Benefiary @relation(fields: [BenefciaryID],references: [Name])
+BenefciaryID String 
+isSettled Boolean 
 }
