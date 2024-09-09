@@ -25,6 +25,9 @@ return this.contractorService.Addpayment(req,res)
 
 }
 
+
+
+
 @Get("/")
 async List(@Req() req:Request,@Res() res:Response){
 
@@ -34,6 +37,17 @@ res.status(200).json(li)
     
     }
 
+
+
+
+@Get("/getinfo")
+async GetInfo(@Req() req:Request,@Res() res:Response){
+
+// const li = await prisma.contractor.findMany()
+// res.status(200).json(li)
+return this.contractorService.GetInfo(req,res)
+    
+    }
     
 
 @Post("/addcontractor")

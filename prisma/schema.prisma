@@ -139,7 +139,7 @@ BenefciaryID String
 Date    String
 
 }
-model Contractor{
+model Contractor{ // اضافة المقاول
 
 
   id String @db.ObjectId @map("_id") @id @default(auto())
@@ -147,22 +147,27 @@ Name  String
 WorkPlace String
 Amount  Float
 Invoices Invoices[]
+remainingPayment Float?
+TotalInvoice Float?
 Payment Payment[]  
 }
-model Invoices{
+model Invoices{ //بيانات تسجيل المستخلص
   id String @db.ObjectId @map("_id") @id @default(auto())
   Contractor Contractor @relation(fields: [ContractodID],references: [id])
 ContractodID String @db.ObjectId   
   Amount Float
   InvoiceNO Int
+  BasicTotal Float
+  Insurance Float
+  Adminstrative Float
   WorkPlace String
+  Total Float 
 }
 model Payment{
   id String @db.ObjectId @map("_id") @id @default(auto())
   Contractor Contractor @relation(fields: [ContractodID],references: [id])
   ContractodID String  @db.ObjectId 
-
-Payment Float
+Amount Float
 WorkPlace String?
 Date    String
 
