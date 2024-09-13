@@ -11,7 +11,7 @@ import cluster from 'cluster';
 async function bootstrap() {
   // "http://localhost:3000"
 // "https://amacwindmill-dashboard-react.vercel.app"
-  const app = await NestFactory.create(AppModule,{cors:true});
+  const app = await NestFactory.create(AppModule);
   app.enableCors({origin:"https://ceoamac.vercel.app"});
 await app.listen(process.env.PORT || 3003);
 }
