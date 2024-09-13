@@ -9,15 +9,56 @@ export class SettlementService {
 
 
 
+async totalsettlmetns(param,res){
+    try {
+        // console.log("para",param)
+    const waiter = await prisma.settlement.findMany({skip:parseFloat(param.skip),take:10})
+    // console.log(waiter)
+    res.status(200).json(waiter.reverse())
+    } catch (error) {
+        // console.log(error)
+        res.status(301).json({error})
+    }
+
+
+}
+
+
+
+
+
+
+
+async Count(param,res){
+    try {
+        // console.log("para",param)
+    const waiter = await prisma.settlement.count()
+    console.log(waiter)
+    res.status(200).json(waiter)
+    } catch (error) {
+        // console.log(error)
+        res.status(301).json({error})
+    }
+
+
+}
+
+
+
+
+
+
+
 
 
 async FindSettle(param,res){
-// console.log(id)
-try {
+    try {
+    console.log("para",param)
 const waiter = await prisma.settlement.findMany({where:{BenefciaryID:param.id,Date:param.Date}})
-
+// console.log(waiter)
 res.status(200).json(waiter.reverse())
 } catch (error) {
+    // console.log(error)
     res.status(301).json(error)
 }
 

@@ -12,19 +12,23 @@ constructor(private safeService:SafeService){}
 
 @Get("/findcash")
 async Cash(@Req() req:Request,@Res() res:Response){
+    console.log(Req)
 
 return this.safeService.AvailableCash(req,res)
-
-
 }
 
+@Get("/findcas")
+async Cas(@Req() req:Request,@Res() res:Response){
+    console.log(Req)
+
+return this.safeService.AvailableCash(req,res)
+}
 
 
 
 @Post("/")
 Addfund(@Req() req:Request,@Res() res:Response){
 
-console.log(Req)
 return this.safeService.AddFund(req,res)
 
 }

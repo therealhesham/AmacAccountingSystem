@@ -9,7 +9,24 @@ export class SettlementController {
 
     
     }
+
+
+
+    @Get("/count")
+    async Count(@Param() param , @Res() res:Response){
+        console.log(param)
+        return this.settlementservice.Count(param,res)
+        
+        }
+      
+
+@Get("/:skip")
+async totalSettlement(@Param() param , @Res() res:Response){
+    console.log(param)
+    return this.settlementservice.totalsettlmetns(param,res)
     
+    }
+        
 
 @Get("/:id/:date")
 async FindSettle(@Param() param , @Res() res:Response){

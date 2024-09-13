@@ -44,12 +44,25 @@ async GetTotalAmount(param,res){
 
 
 }
+async BeneficiaryDelete(param,res){
 
+
+try {
+    const fetcher = await newPrisma.benefiary.delete({where:{Name:param.id}});
+    res.status(200).json(fetcher)
+} catch (error) {
+    res.status(301).json(error)
+    
+}
+
+
+
+}
 
 async GetBeneficiary(res){
 try {
-    const fetcher = await newPrisma.benefiary.findMany();
-    console.log(fetcher)
+    const fetcher = await newPrisma.benefiary.findMany({include:{NewpettyCash:true}});
+ console.log(fetcher)   
     if(fetcher.length == 0 ) return   res.status(301).json({error:"No Data"})
     res.status(200).json(fetcher)
 } catch (error) {

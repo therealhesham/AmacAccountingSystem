@@ -8,9 +8,10 @@ export class ContractorService {
 async Addinvoice(req,res){
 const {Amount,InvoiceNO,ContractodID,Adminstrative,BasicTotal,Insurance,Total,WorkPlace} = req.body;
 try {
-const createInvoice = await prisma.invoices.create({data:{Amount:parseFloat(Amount),InvoiceNO,ContractodID,Adminstrative,BasicTotal,Insurance,Total,WorkPlace}})
+const createInvoice = await prisma.invoices.create({data:{Amount:parseFloat(Amount),InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total,WorkPlace}})
 res.status(200).json(createInvoice)
 } catch (error) {
+    console.log(error)
 res.status(301).json(error)
     
 }
@@ -21,12 +22,13 @@ async AddContractor(req,res){
 try {
     const {remainingPayment,TotalInvoice,Amount,Name,WorkPlace}=req.body;
 
-const create = await prisma.contractor.create({data:{TotalInvoice,Amount,remainingPayment,Name,WorkPlace}})
+const create = await prisma.contractor.create({data:{TotalInvoice:parseFloat(TotalInvoice),remainingPayment:parseFloat(remainingPayment),Name,WorkPlace}})
 
 
 res.status(200).json(create)
 
 } catch (error) {
+    console.log(error)
 res.status(301).json(error)
     
 }
@@ -48,7 +50,12 @@ async ContractorList(req,res){
     }
     }
     
+async GetContractor(req,res){
 
+    const finder = await prisma.contractor.findFirst({where:{Name:req.id}})
+res.send(finder)
+
+}
 
 
 async GetInfo(req,res){
@@ -62,8 +69,8 @@ const finders = await prisma.invoices.findMany({where:{ContractodID:id}})
 const findert  = await prisma.payment.findMany({where:{ContractodID:id}})
      
     // res.status(200).json(finder)
+    console.log(finder)
  const ss=   Promise.all([finder,finders,findert])
-//  console.log(ss.)
 // await ss()
 ss.then(e=>res.status(200).json(ss))
     } catch (error) {

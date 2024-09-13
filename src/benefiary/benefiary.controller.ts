@@ -12,6 +12,15 @@ constructor(public BenefiaryService:BenefiaryService){
 
 }
 
+@Get("/delete/:id")
+DeleteBeneficiary(@Param() param,@Res() res:Response){
+
+
+return this.BenefiaryService.BeneficiaryDelete(param,res);
+
+}
+
+
 @Get("/get")
 GetBeneficiary(@Res() res:Response){
 

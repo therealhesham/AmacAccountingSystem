@@ -45,7 +45,7 @@ async addfundstosafe(@Req() req:Request,@Res() res:Response){
         const {CreditName,DebitName,CreditAmount,DebitAmount,CreditType,Notes,date}=req.body;
         const  DBResponse =await this.doubleentryservice.Transactions(req,res,date,CreditType,CreditName,DebitName,CreditAmount,DebitAmount,Notes);
   console.log(DBResponse)
-        if (!DBResponse )  return res.status(301).json({error:"error"})
+        if (DBResponse == "error" )  return res.status(301).json({error:"error"})
     res.status(201).json(DBResponse)    
     } catch (error) {
     console.log(error)

@@ -1,4 +1,4 @@
-import {Req,Res,Get,Post, Controller } from '@nestjs/common';
+import {Req,Res,Param,Get,Post, Controller } from '@nestjs/common';
 import { Request,Response } from 'express';
 
 import { ContractorService } from './contractor.service';
@@ -36,7 +36,14 @@ res.status(200).json(li)
 // return this.contractorService.AddContractor(req,res)
     
     }
-
+    @Get("/invoices")
+    async invoices(@Req() req:Request,@Res() res:Response){
+    
+    const li = await prisma.invoices.findMany()
+    res.status(200).json(li)
+    // return this.contractorService.AddContractor(req,res)
+        
+      }
 
 
 
@@ -48,7 +55,15 @@ async GetInfo(@Req() req:Request,@Res() res:Response){
 return this.contractorService.GetInfo(req,res)
     
     }
-    
+
+    @Get("/:id")
+    async GetContractor(@Param() req:string,@Res() res:Response){
+    console.log(req)
+    // const li = await prisma.contractor.findMany()
+    // res.status(200).json(li)
+    return this.contractorService.GetContractor(req,res)
+        
+        }
 
 @Post("/addcontractor")
 async addContractor(@Req() req:Request,@Res() res:Response){

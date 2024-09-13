@@ -6,6 +6,8 @@
 
 generator client {
   provider = "prisma-client-js"
+
+  previewFeatures = ["relationJoins"]
 }
 
 datasource db {
@@ -128,6 +130,7 @@ Name String @unique
 Type String?
 Amount Int? 
 Clauses Settlement[]
+
 NewpettyCash PettyCash[]
 }
 model Settlement{
@@ -136,32 +139,38 @@ Clauses String
 Amount  Float
 BeneficiaryID Benefiary @relation(fields: [BenefciaryID],references: [Name])
 BenefciaryID String 
-Date    String
+Date    String?
 
 }
 model Contractor{ // اضافة المقاول
 
 
   id String @db.ObjectId @map("_id") @id @default(auto())
-Name  String
+Name  String @unique
 WorkPlace String
-Amount  Float
+Amount  Float?
 Invoices Invoices[]
 remainingPayment Float?
 TotalInvoice Float?
 Payment Payment[]  
 }
+model Date{
+  id String @db.ObjectId @map("_id") @id @default(auto())
+date String
+
+  
+}
 model Invoices{ //بيانات تسجيل المستخلص
   id String @db.ObjectId @map("_id") @id @default(auto())
   Contractor Contractor @relation(fields: [ContractodID],references: [id])
 ContractodID String @db.ObjectId   
-  Amount Float
-  InvoiceNO Int
-  BasicTotal Float
-  Insurance Float
-  Adminstrative Float
-  WorkPlace String
-  Total Float 
+  Amount Float?
+  InvoiceNO Int?
+  BasicTotal Float?
+  Insurance Float?
+  Adminstrative Float?
+  WorkPlace String?
+  Total Float ?
 }
 model Payment{
   id String @db.ObjectId @map("_id") @id @default(auto())

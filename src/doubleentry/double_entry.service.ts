@@ -10,7 +10,8 @@ export class DoubleEntryService {
 
 async Total(req,res){
 // const waiter = await prisma.pettyCash.aggregate({_sum:{amount:true},where:{isSettled :false}})
-const waiter = await prisma.benefiary.aggregate({_sum:{Amount:true}})
+const waiter = await prisma.double_Entry.aggregate({_sum:{CreditAmount:true},where:{CreditType:"عهدة"}})
+console.log(waiter)
 res.status(200).json(waiter)
 }
 
@@ -31,15 +32,15 @@ if(CreditAmount != DebitAmount) return res.status(301).json({error:"CreditAmount
 const findSafe = await prisma.safe.findFirst({where:{Date:new Date().toLocaleDateString()}})
 
 if(!findSafe) return   res.status(301).json({error:"safe is not found , call adminstrator"})
-
+if((findSafe.Quantity - CreditAmount) < 0 )return res.status(301).json({error:"safe is not found , call adminstrator"})
 async function transfer( amount: number) {
 
 try {
     
     return prisma.$transaction(async (tx) => {
 
-  const waiter = await prisma.double_Entry.create({data:{date,CreditType,CreditAmount:parseFloat(CreditAmount),CreditName,DebitAmount:parseFloat(DebitAmount),DebitName,Notes}})
-        console.log(waiter)
+  const waiter = await prisma.double_Entry.create({data:{date:new Date().toLocaleDateString(),CreditType,CreditAmount:parseFloat(CreditAmount),CreditName,DebitAmount:parseFloat(DebitAmount),DebitName,Notes}})
+        // console.log(waiter)
 if(!waiter) return  res.status(301).json({error:"error with double entry"})
       const sender = await tx.safe.update({
         data: {
@@ -52,11 +53,7 @@ if(!waiter) return  res.status(301).json({error:"error with double entry"})
         }
       })
     //   console.log(sender)
-        if (sender.Quantity < 0) {
-        await prisma.double_Entry.delete({where:{id:waiter.id}})
-        throw new Error(` doesn't have enough to send ${amount}`)
-      }
-     await tx.benefiary.update({data:{Amount:{increment:parseFloat(CreditAmount)}},where:{Name:CreditName}})
+          await tx.benefiary.update({data:{Amount:{increment:parseFloat(CreditAmount)}},where:{Name:CreditName}})
  const recipient =      await tx.pettyCash.create({data:{BenefciaryID:CreditName,Date:new Date().toLocaleDateString(),amount:parseFloat(CreditAmount),isSettled:false}})
  
   return  res.status(200).json({success:"created successful"})
@@ -67,7 +64,7 @@ if(!waiter) return  res.status(301).json({error:"error with double entry"})
   })
 
 } catch (error) {
-  return res.status(301).json({error:"Fatal Error"})
+   res.status(301).json({error:"Fatal Error"})
 //  console.log(error)   
 }
   }
@@ -122,7 +119,7 @@ if(findBankAccount.Quantity - parseFloat(CreditAmount) < 0) return 'error'
             data: {
               Quantity: {
                 increment: parseFloat(CreditAmount),
-              },
+                },
             },
             where: {
               Date: new Date().toLocaleDateString(),
