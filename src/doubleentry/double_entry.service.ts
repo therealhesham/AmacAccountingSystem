@@ -31,7 +31,7 @@ if(CreditAmount != DebitAmount) return res.status(301).json({error:"CreditAmount
 
 const findSafe = await prisma.safe.findFirst({where:{Date:new Date().toLocaleDateString()}})
 
-if(!findSafe) return   res.status(301).json({error:"safe is not found , call adminstrator"})
+// if(!findSafe) return   res.status(301).json({error:"safe is not found , call adminstrator"})
 if((findSafe.Quantity - CreditAmount) < 0 )return res.status(301).json({error:"safe is not found , call adminstrator"})
 async function transfer( amount: number) {
 
@@ -40,8 +40,7 @@ try {
     return prisma.$transaction(async (tx) => {
 
   const waiter = await prisma.double_Entry.create({data:{date:new Date().toLocaleDateString(),CreditType,CreditAmount:parseFloat(CreditAmount),CreditName,DebitAmount:parseFloat(DebitAmount),DebitName,Notes}})
-        // console.log(waiter)
-if(!waiter) return  res.status(301).json({error:"error with double entry"})
+        
       const sender = await tx.safe.update({
         data: {
           Quantity: {
