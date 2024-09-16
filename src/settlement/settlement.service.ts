@@ -44,6 +44,26 @@ async Count(param,res){
 }
 
 
+async Search(param,res){
+
+
+    try {
+//   console.log(param)
+
+
+const waiter = await prisma.settlement.findMany({where:{BenefciaryID:param.id, Date:param.date}})
+    console.log(waiter)
+        res.status(200).json(waiter.reverse())
+
+    } catch (error) {
+        console.log(error)
+        res.status(301).json({error})
+    }
+
+
+}
+
+
 
 
 
@@ -53,9 +73,9 @@ async Count(param,res){
 
 async FindSettle(param,res){
     try {
-    console.log("para",param)
-const waiter = await prisma.settlement.findMany({where:{BenefciaryID:param.id,Date:param.Date}})
-// console.log(waiter)
+    // console.log("para",param)
+const waiter = await prisma.settlement.findMany()
+console.log(waiter)
 res.status(200).json(waiter.reverse())
 } catch (error) {
     // console.log(error)
@@ -91,7 +111,7 @@ const awaiter = await tx.benefiary.update({where:{Name:Name},data:{Amount:{decre
     (Amount)}}})
 
 
-const waiter = await tx.settlement.create({data:{Clauses,Amount:parseFloat(Amount),BenefciaryID:Name,Date:new Date().toLocaleString()}})
+const waiter = await tx.settlement.create({data:{Clauses,Amount:parseFloat(Amount),BenefciaryID:Name,Date:new Date().toLocaleDateString()}})
 res.status(200).json(awaiter)   
 
 // return "awaiter.Amount"

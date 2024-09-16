@@ -18,9 +18,10 @@ import { LegacyDoubleEntryModule } from './legacy-double-entry/legacy-double-ent
 import { SuppliersModule } from './suppliers/suppliers.module';
 import { SettlementModule } from './settlement/settlement.module';
 import { ContractorModule } from './contractor/contractor.module';
+import { PettycashModule } from './pettycash/pettycash.module';
 
 @Module({
-  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule],
+  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule, PettycashModule],
   controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController],
   providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService],
 })
