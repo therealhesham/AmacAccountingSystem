@@ -9,7 +9,7 @@ import cluster from 'cluster';
 // cluster.isMaster
 // os.cpus
 async function bootstrap() {
-  // "http://localhost:3000"
+  // 
 // "https://amacwindmill-dashboard-react.vercel.app"
   const app = await NestFactory.create(AppModule);
   app.enableCors({origin:"https://ceoamac.vercel.app"});

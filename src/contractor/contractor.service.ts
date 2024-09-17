@@ -8,7 +8,7 @@ export class ContractorService {
 async Addinvoice(req,res){
 const {Amount,InvoiceNO,ContractodID,Adminstrative,BasicTotal,Insurance,Total,WorkPlace} = req.body;
 try {
-const createInvoice = await prisma.invoices.create({data:{Amount:parseFloat(Amount),InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total,WorkPlace}})
+const createInvoice = await prisma.invoices.create({data:{InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal),WorkPlace}})
 res.status(200).json(createInvoice)
 } catch (error) {
     console.log(error)
@@ -58,6 +58,46 @@ res.send(finder)
 }
 
 
+async AddPayment(req,res){
+    try {
+        const {Amount,ContractodID,WorkPlace,Name}=req.body
+        console.log(parseFloat(Amount),Date,WorkPlace,ContractodID)
+        const findmany = await prisma.payment.create({data:{Name,Amount:parseFloat(Amount),WorkPlace,Date: new Date().toLocaleDateString(),ContractodID}})
+        res.status(200).json(findmany)
+    } catch (error) {
+        console.log(error)
+        res.status(301).json({error})
+    }
+    
+    }
+async GetContractorPayment(req,res){
+    try {
+        const findmany = await prisma.payment.findMany()
+    console.log(findmany)
+        res.status(200).json(findmany)
+    } catch (error) {
+        res.status(301).json({error})
+    }
+    
+    }
+
+
+
+
+
+
+async GetPayment(req,res){
+try {
+    const findmany = await prisma.payment.findMany()
+console.log(findmany)
+    res.status(200).json(findmany.reverse())
+} catch (error) {
+// console.log(error)
+
+    res.status(301).json({error})
+}
+
+}
 async GetInfo(req,res){
     try {
         const {Payment,Name,WorkPlace,id}=req.body;
@@ -83,13 +123,52 @@ ss.then(e=>res.status(200).json(ss))
 
 }
 
+
+
+async DeletePayment(req,res){
+    try {
+        const {id}=req.body;
+    
+    const delet = await prisma.payment.delete({where:{id}})
+    
+    
+    res.status(200).json(delet)
+    
+    } catch (error) {
+        console.log(error)
+    res.status(301).json(error)
+        
+    }
+
+}
+async Delete(req,res){
+    try {
+        const {id}=req.body;
+    
+    const delet = await prisma.contractor.delete({where:{id}})
+    
+    
+    res.status(200).json(delet)
+    
+    } catch (error) {
+        console.log(error)
+    res.status(301).json(error)
+        
+    }
+    
+
+
+
+
+}
+
 async Addpayment(req,res){
     try {
         const {Payment,Name,WorkPlace,id}=req.body;
     return await prisma.$transaction(async (tx)=>{
 // await tx.contractor.update({where:id,data:{Amount:{decrement:Payment}}})
 
-const t =await tx.payment.create({data:{Amount:parseFloat(Payment),Date:new Date().toLocaleString(),WorkPlace,ContractodID:id}})
+const t =await tx.payment.create({data:{Name,Amount:parseFloat(Payment),Date:new Date().toLocaleString(),WorkPlace,ContractodID:id}})
 const update = await tx.contractor.update({where:id,data:{Amount:{decrement:Payment}}})
 if(update.Amount < 0)    throw new Error("error updating , funds is greater")
 const doubleentry= await tx.double_Entry.create({data:{CreditAmount:Payment,DebitAmount:Payment,CreditName:Name,DebitName:"خزينة",CreditType:"دفعة"}})

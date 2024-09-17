@@ -4,11 +4,31 @@ import { Request,Response } from 'express';
 import { ContractorService } from './contractor.service';
 import { Prisma, PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient()
-@Controller('contractor')
+
+@Controller('/contractor')
 export class ContractorController {
-constructor(  private contractorService : ContractorService ){}
+constructor(  public contractorService : ContractorService ){}
 
 
+
+
+@Post("/addpaymen")
+async AddPayment(@Req() req:Request,@Res() res:Response){
+console.log(req.body)
+return this.contractorService.AddPayment(req,res)
+
+}
+
+
+
+
+
+@Get("/getpayments")
+async GetPayment(@Req() req:Request,@Res() res:Response){
+
+return this.contractorService.GetPayment(req,res)
+
+}
 @Post("/addinvoice")
 async addinvoice(@Req() req:Request,@Res() res:Response){
 
@@ -17,14 +37,7 @@ return this.contractorService.Addinvoice(req,res)
 
 }
 
-@Post("/addpaymnet")
-async addpayment(@Req() req:Request,@Res() res:Response){
-
-
-return this.contractorService.Addpayment(req,res)
-
-}
-
+// @Post("/addpaymnet")
 
 
 
@@ -70,6 +83,27 @@ async addContractor(@Req() req:Request,@Res() res:Response){
 
 
 return this.contractorService.AddContractor(req,res)
+
+}
+
+
+
+
+@Post("/delete")
+async delete(@Req() req:Request,@Res() res:Response){
+
+
+return this.contractorService.Delete(req,res)
+
+}
+
+
+
+@Post("/deletepayment")
+async DeletePayment(@Req() req:Request,@Res() res:Response){
+
+
+return this.contractorService.DeletePayment(req,res)
 
 }
 

@@ -19,10 +19,12 @@ import { SuppliersModule } from './suppliers/suppliers.module';
 import { SettlementModule } from './settlement/settlement.module';
 import { ContractorModule } from './contractor/contractor.module';
 import { PettycashModule } from './pettycash/pettycash.module';
+import { ContractorController } from './contractor/contractor.controller';
+import { ContractorService } from './contractor/contractor.service';
 
 @Module({
   imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule, PettycashModule],
-  controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController],
-  providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService],
+  controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController,ContractorController],
+  providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService,ContractorService],
 })
 export class AppModule {}

@@ -15,180 +15,158 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
   email String  @unique
   name  String?
   // creadted Double_Entry
   // Created Double_Entry?
-  }
-
-
-
-model Deposit{
-id String @id @default(auto()) @map("_id") @db.ObjectId
-SupplierName String 
-SupplierNameID String ?
-Date          String
-Amount String? // what he got
-Quantity String? //what he supplied as a material
-
-
-
 }
 
-
-model Supplier{
-id String @id @default(auto()) @map("_id") @db.ObjectId
-Name String @unique
-Type String?
-Date  String?
-Amount Float? @default(0)// what he got 
-Quantity String? //what he supplied as a material
-Unit  String? 
-Price String?
-RealAmount Float?
-
+model Deposit {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  SupplierName   String
+  SupplierNameID String?
+  Date           String
+  Amount         String? // what he got
+  Quantity       String? //what he supplied as a material
 }
-model Bank_Account{
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+
+model Supplier {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  Name       String  @unique
+  Type       String?
+  Date       String?
+  Amount     Float?  @default(0) // what he got 
+  Quantity   String? //what he supplied as a material
+  Unit       String?
+  Price      String?
+  RealAmount Float?
+}
+
+model Bank_Account {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   BankName String?
   Type     String?
   Quantity Float
-  Date     String?  @unique
+  Date     String? @unique
 }
 
-model Safe{
-
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+model Safe {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
   Quantity Float
   Name     String?
   Date     String? @unique
 }
 
+model Double_Entry {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  CreditType   String?
+  CreditName   String
+  DebitName    String
+  CreditAmount Int
 
-model Double_Entry{
-
-id    String @id @default(auto()) @map("_id") @db.ObjectId
-CreditType String?
-CreditName String
-DebitName String
-CreditAmount Int
-
-DebitAmount Int
-Notes       String?
-date        String?
-settled      Boolean?
-unix_time_stamp DateTime @default(now())
-transferred   Boolean?
-
+  DebitAmount     Int
+  Notes           String?
+  date            String?
+  settled         Boolean?
+  unix_time_stamp DateTime @default(now())
+  transferred     Boolean?
 }
 
-
-
-model Transfering{
-id              String @id @default(auto()) @map("_id") @db.ObjectId
-unix_timestamp  String      
-status          Boolean?
-bankaccount     String?  @unique @db.ObjectId
-safe            String?   @unique @db.ObjectId
-
-
-
-  
-}
-model Legacy_Double_Entry{
-
-id    String @id @default(auto()) @map("_id") @db.ObjectId
-CreditType String?
-CreditName String
-DebitName String
-CreditAmount Int
-
-DebitAmount Int
-Notes       String?
-date        String?
-settled      Boolean?
-unix_time_stamp DateTime @default(now())
-transferred   Boolean?
-
+model Transfering {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  unix_timestamp String
+  status         Boolean?
+  bankaccount    String?  @unique @db.ObjectId
+  safe           String?  @unique @db.ObjectId
 }
 
-model Asset{
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
+model Legacy_Double_Entry {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  CreditType   String?
+  CreditName   String
+  DebitName    String
+  CreditAmount Int
+
+  DebitAmount     Int
+  Notes           String?
+  date            String?
+  settled         Boolean?
+  unix_time_stamp DateTime @default(now())
+  transferred     Boolean?
+}
+
+model Asset {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
   AssetName String
   Cost      Int
-
-
 }
-
 
 model Benefiary {
-id    String @id @default(auto()) @map("_id") @db.ObjectId
-Name String @unique
-Type String?
-Amount Int? 
-Clauses Settlement[]
+  id      String       @id @default(auto()) @map("_id") @db.ObjectId
+  Name    String       @unique
+  Type    String?
+  Amount  Int?
+  Clauses Settlement[]
 
-NewpettyCash PettyCash[]
+  NewpettyCash PettyCash[]
 }
-model Settlement{
-id    String @id @default(auto()) @map("_id") @db.ObjectId
-Clauses String
-Amount  Float
-BeneficiaryID Benefiary @relation(fields: [BenefciaryID],references: [Name])
-BenefciaryID String 
-Date    String?
 
+model Settlement {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  Clauses       String
+  Amount        Float
+  BeneficiaryID Benefiary @relation(fields: [BenefciaryID], references: [Name])
+  BenefciaryID  String
+  Date          String?
 }
-model Contractor{ // اضافة المقاول
 
-
-  id String @db.ObjectId @map("_id") @id @default(auto())
-Name  String @unique
-WorkPlace String
-Amount  Float?
-Invoices Invoices[]
-remainingPayment Float?
-TotalInvoice Float?
-Payment Payment[]  
+model Contractor {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  Name             String     @unique
+  WorkPlace        String
+  Amount           Float?
+  Invoices         Invoices[]
+  remainingPayment Float?
+  TotalInvoice     Float?
+  Payment          Payment[]
 }
-model Date{
-  id String @db.ObjectId @map("_id") @id @default(auto())
-date String
 
-  
+model Date {
+  id   String @id @default(auto()) @map("_id") @db.ObjectId
+  date String
 }
-model Invoices{ //بيانات تسجيل المستخلص
-  id String @db.ObjectId @map("_id") @id @default(auto())
-  Contractor Contractor @relation(fields: [ContractodID],references: [id])
-ContractodID String @db.ObjectId   
-  Amount Float?
-  InvoiceNO Int?
-  BasicTotal Float?
-  Insurance Float?
+
+model Invoices {
+  id            String     @id @default(auto()) @map("_id") @db.ObjectId
+  Contractor    Contractor @relation(fields: [ContractodID], references: [id], onDelete: Cascade)
+  ContractodID  String     @db.ObjectId
+  Amount        Float?
+  InvoiceNO     Int?
+  BasicTotal    Float?
+  Insurance     Float?
   Adminstrative Float?
-  WorkPlace String?
-  Total Float ?
-}
-model Payment{
-  id String @db.ObjectId @map("_id") @id @default(auto())
-  Contractor Contractor @relation(fields: [ContractodID],references: [id])
-  ContractodID String  @db.ObjectId 
-Amount Float
-WorkPlace String?
-Date    String
-
-  
+  WorkPlace     String?
+  Total         Float?
 }
 
-model PettyCash{
-amount Float
-Name String?
-Date String
-id String @id @default(auto()) @map("_id") @db.ObjectId 
-Benefciary Benefiary @relation(fields: [BenefciaryID],references: [Name])
-BenefciaryID String 
-isSettled Boolean 
+model Payment {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  Contractor   Contractor @relation(fields: [ContractodID], references: [id])
+  ContractodID String     @db.ObjectId
+  Amount       Float
+  WorkPlace    String?
+  Date         String
+  Name         String?
+}
+
+model PettyCash {
+  amount       Float
+  Name         String?
+  Date         String
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  Benefciary   Benefiary @relation(fields: [BenefciaryID], references: [Name])
+  BenefciaryID String
+  isSettled    Boolean
 }

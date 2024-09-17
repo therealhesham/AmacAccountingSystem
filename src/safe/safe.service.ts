@@ -10,7 +10,7 @@ try {
     const today = new Date().toLocaleDateString();
     console.log(today)
 const finder = await prisma.safe.findFirst({where:{Date:today}})
-console.log(finder)
+// console.log(finder,"finder")
 res.status(200).json(finder.Quantity)
 
 } catch (error) {
@@ -29,9 +29,12 @@ res.status(301).json(0)
         const{BankName,Type,Quantity,_Date,Name} = req.body;
         console.log(req.body)
         const finder = await prisma.safe.findFirst({where:{Date:today}})
-    if (finder )return res.status(301).json(finder) 
+    if (finder ){
+        const findsafe = await prisma.safe.update({where:{Date:today},data:{Quantity:{increment:Quantity}}})
+        
+        return res.status(301).json(finder) 
     
-    const find_er  =await prisma.safe.create({data:{Date:today,Name,Quantity:Number(Quantity)}})
+ }   const find_er  =await prisma.safe.create({data:{Date:today,Name,Quantity:Number(Quantity)}})
     res.status(200).json(find_er)
         
     } catch (error) {
