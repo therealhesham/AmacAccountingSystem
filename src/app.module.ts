@@ -21,9 +21,10 @@ import { ContractorModule } from './contractor/contractor.module';
 import { PettycashModule } from './pettycash/pettycash.module';
 import { ContractorController } from './contractor/contractor.controller';
 import { ContractorService } from './contractor/contractor.service';
+import { WorplaceModule } from './worplace/worplace.module';
 
 @Module({
-  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule, PettycashModule],
+  imports: [UserModule, DoubleEntryModule, BenefiaryModule, AssetsModule, AddtobankaccountModule, SafeModule, LegacyDoubleEntryModule, SuppliersModule, SettlementModule, ContractorModule, PettycashModule, WorplaceModule],
   controllers: [AppController, DoubleEntryController, BenefiaryController, AssetsController,ContractorController],
   providers: [AppService, DoubleEntryService, BenefiaryService, AssetsService,ContractorService],
 })

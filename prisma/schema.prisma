@@ -155,11 +155,32 @@ model Payment {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
   Contractor   Contractor @relation(fields: [ContractodID], references: [id])
   ContractodID String     @db.ObjectId
-  Amount       Float
+  Amount       Float?
   WorkPlace    String?
   Date         String
   Name         String?
 }
+
+
+
+
+
+
+model Workplace {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+ 
+  WorkPlace    String
+ }
+
+
+
+
+
+
+
+
+
+
 
 model PettyCash {
   amount       Float

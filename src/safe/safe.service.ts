@@ -7,15 +7,15 @@ export class SafeService {
     
 async AvailableCash (req,res){
 try {
+    // console.log("toda")
+
     const today = new Date().toLocaleDateString();
-    console.log(today)
-const finder = await prisma.safe.findFirst({where:{Date:today}})
-// console.log(finder,"finder")
+    const finder = await prisma.safe.findFirst({where:{Date:today}})
 res.status(200).json(finder.Quantity)
 
 } catch (error) {
-   console.log(error) 
-res.status(301).json(0)
+    console.error(error)
+res.status(301).json(error)
 
 
 }

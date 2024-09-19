@@ -79,16 +79,11 @@ async Transactions(req,res,date, CreditType,CreditName,DebitName,CreditAmount,De
     
     if(CreditAmount != DebitAmount) return  "error"
     
-    const findBankAccount = await prisma.bank_Account.findFirst({where:{Date:new Date().toLocaleDateString()}})
-          
-    if(!findBankAccount) return "error" 
-    
     const findSafe = await prisma.safe.findFirst({where:{Date:new Date().toLocaleDateString()}})
-    
+    console.log(findSafe)
     if(!findSafe) return  "error"
     
 
-if(findBankAccount.Quantity - parseFloat(CreditAmount) < 0) return 'error'
     async function transfer( amount: number) {
     
     try {
@@ -96,24 +91,8 @@ if(findBankAccount.Quantity - parseFloat(CreditAmount) < 0) return 'error'
         return prisma.$transaction(async (tx) => {
     
       const waiter = await prisma.double_Entry.create({data:{date,CreditType,CreditAmount:parseFloat(CreditAmount),CreditName,DebitAmount:parseFloat(DebitAmount),DebitName,Notes}})
-            console.log(waiter)
     if(!waiter) return "error creating";
-          const sender = await tx.bank_Account.update({
-            data: {
-              Quantity: {
-                decrement: parseFloat(CreditAmount),
-              },
-            },
-            where: {
-              Date: new Date().toLocaleDateString()
-            }
-          })
-          console.log(sender)
-            if (sender.Quantity < 0) {
-            await prisma.double_Entry.delete({where:{id:waiter.id}})
-           return new Error(` doesn't have enough to send ${amount}`)
-          }
-      
+         
           const recipient = await tx.safe.update({
             data: {
               Quantity: {

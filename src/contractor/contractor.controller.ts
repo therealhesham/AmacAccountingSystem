@@ -11,6 +11,14 @@ constructor(  public contractorService : ContractorService ){}
 
 
 
+@Get("/contractorinfo/:id")
+FindTotal(@Param() param:string , @Res() res:Response){
+// new PrismaClient().pettyCash.deleteMany()
+return this.contractorService.GetSpecificInfo(param,res)
+
+
+}
+
 
 @Post("/addpaymen")
 async AddPayment(@Req() req:Request,@Res() res:Response){
@@ -44,9 +52,9 @@ return this.contractorService.Addinvoice(req,res)
 @Get("/")
 async List(@Req() req:Request,@Res() res:Response){
 
-const li = await prisma.contractor.findMany()
-res.status(200).json(li)
-// return this.contractorService.AddContractor(req,res)
+// const li = await prisma.contractor.findMany()
+// res.status(200).json(li)
+return this.contractorService.ContractorList(req,res)
     
     }
     @Get("/invoices")
@@ -60,6 +68,14 @@ res.status(200).json(li)
 
 
 
+
+
+
+
+
+
+
+      
 @Get("/getinfo")
 async GetInfo(@Req() req:Request,@Res() res:Response){
 
