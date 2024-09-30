@@ -124,8 +124,8 @@ model Settlement {
 
 model Contractor {
   id               String     @id @default(auto()) @map("_id") @db.ObjectId
-  Name             String     @unique
-  WorkPlace        String
+  Name             String ?    @unique
+  WorkPlace        String?
   Amount           Float?
   Invoices         Invoices[]
   remainingPayment Float?
@@ -153,7 +153,7 @@ model Invoices {
 
 model Payment {
   id           String     @id @default(auto()) @map("_id") @db.ObjectId
-  Contractor   Contractor @relation(fields: [ContractodID], references: [id])
+  Contractor   Contractor @relation(fields: [ContractodID], references: [id],onDelete:Cascade)
   ContractodID String     @db.ObjectId
   Amount       Float?
   WorkPlace    String?

@@ -22,8 +22,8 @@ return this.contractorService.GetSpecificInfo(param,res)
 
 @Post("/addpaymen")
 async AddPayment(@Req() req:Request,@Res() res:Response){
-console.log(req.body)
-return this.contractorService.AddPayment(req,res)
+// console.log(req.body)
+return this.contractorService.Addpayment(req,res)
 
 }
 

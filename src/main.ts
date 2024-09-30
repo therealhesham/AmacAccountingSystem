@@ -12,7 +12,7 @@ async function bootstrap() {
   // 
 // "https://amacwindmill-dashboard-react.vercel.app"
   const app = await NestFactory.create(AppModule);
-  app.enableCors({origin:"https://ceoamac.vercel.app"});
+  app.enableCors({origin:"https://amacwindmill-dashboard-react.vercel.app"});
 await app.listen(process.env.PORT || 3003);
 }
 bootstrap();

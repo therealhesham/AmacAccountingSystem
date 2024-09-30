@@ -8,8 +8,10 @@ export class ContractorService {
 async Addinvoice(req,res){
 const {Amount,InvoiceNO,ContractodID,Adminstrative,BasicTotal,Insurance,Total,WorkPlace} = req.body;
 try {
-const createInvoice = await prisma.invoices.create({data:{InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal),WorkPlace}})
-res.status(200).json(createInvoice)
+
+    const createInvoice = await prisma.invoices.create({data:{InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal),WorkPlace}})
+const increment = await prisma.contractor.update({where:{id:ContractodID},data:{TotalInvoice:{increment:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal)}}})
+    res.status(200).json(createInvoice)
 } catch (error) {
     // console.log(error)
 res.status(301).json(error)
@@ -186,17 +188,18 @@ async Delete(req,res){
 
 async Addpayment(req,res){
     try {
-        const {Payment,Name,WorkPlace,id}=req.body;
+        const {Amount,Name,WorkPlace,ContractodID}=req.body;
     return await prisma.$transaction(async (tx)=>{
 // await tx.contractor.update({where:id,data:{Amount:{decrement:Payment}}})
-
-const t =await tx.payment.create({data:{Name,Amount:parseFloat(Payment),Date:new Date().toLocaleString(),WorkPlace,ContractodID:id}})
-const update = await tx.contractor.update({where:id,data:{remainingPayment:{decrement:Payment}}})
+console.log(req.body)
+const update = await tx.contractor.update({where:{id:ContractodID},data:{remainingPayment:{increment:parseFloat(Amount)}}})
 if(update.Amount < 0)    throw new Error("error updating , funds is greater")
-const doubleentry= await tx.double_Entry.create({data:{CreditAmount:Payment,DebitAmount:Payment,CreditName:Name,DebitName:"خزينة",CreditType:"دفعة"}})
-res.status(200).json(doubleentry)   })
+    const t =await tx.payment.create({data:{Name,Amount:parseFloat(Amount),Date:new Date().toLocaleDateString(),WorkPlace,ContractodID}})
+const doubleentry= await tx.double_Entry.create({data:{CreditAmount:parseFloat(Amount),DebitAmount:parseFloat(Amount),CreditName:Name,DebitName:"خزينة",CreditType:"دفعة"}})
+res.status(200).json(doubleentry)   },{maxWait:100000,timeout:50000})
 
     } catch (error) {
+        console.log(error)
     res.status(301).json(error)
         
     }

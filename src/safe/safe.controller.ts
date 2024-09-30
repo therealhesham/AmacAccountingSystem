@@ -11,7 +11,7 @@ constructor(public safeService:SafeService){}
 
 
 
-@Get("/findca")
+@Get("/cas")
 async Cash(@Req() req:Request,@Res() res:Response){
 
 return this.safeService.AvailableCash(req,res)
