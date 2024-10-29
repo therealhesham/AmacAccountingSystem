@@ -18,6 +18,15 @@ return this.supplierservice.FetchSuppliers(req,res)
 }
 
 
+
+@Post('/paysupplier')
+async PaySypplier(@Req()  req:Request, @Res() res:Response){
+
+return this.supplierservice.paysupplier(req,res)
+
+
+}
+
 @Post("/adddeposit")
 async AddDeposit(@Req() req:Request,@Res() res:Response){
 

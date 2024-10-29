@@ -28,11 +28,25 @@ console.log(error)
 
 
 }
+async  GetSpecificInfo(param,res) {
+    try {
+        // const {Payment,Name,WorkPlace,id}=req.body;
+    
 
+const finder = await newPrisma.benefiary.findMany({where:{id:param.id},include:{Clauses:true,NewpettyCash:true}})
+        
+    res.status(200).json(finder)
+    } catch (error) {
+    res.status(301).json(error)
+        
+    }
+
+}
 async GetTotalAmount(param,res){
     try {
+        console.log(param)
         const fetcher = await newPrisma.benefiary.findFirst({where:{Name:param.id}});
-        // console.log(fetcher)
+        console.log(fetcher)
         // if(fetcher. == 0 ) return   res.status(301).json({error:"No Data"})
         res.status(200).json(fetcher)
     } catch (error) {

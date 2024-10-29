@@ -49,7 +49,6 @@ return updater
 
 }
 
-
 async addSupplier(req,res){
 
     try {
@@ -57,9 +56,11 @@ async addSupplier(req,res){
     const {RealAmount,Date,Type,Name,Quantity}=req.body;
     const search = await prisma .supplier.findFirst({where:{Name}})
     if (!search){
-    
-const create = await prisma.supplier.create({data:{RealAmount,Date,Type,Name,Quantity}})
-res.status(201).json(create)
+        //ما قبل السيستم
+//    RealAmount ما بعد و قبل السيستم
+const create = await prisma.supplier.create({data:{RealAmount,Date,Type,Name,Quantity,Amount:RealAmount}})
+const creatdebt = await prisma.debt.create({data:{Amount:create.RealAmount,SupplierID:create.id,type:"مورد"}})
+res.status(200).json(create)
 
 }
 else{
@@ -74,6 +75,82 @@ else{
 res.status(301).json(error)        
 }
 }
+
+
+async deletesupplier(req,res){
+
+    try {
+        
+    const {RealAmount,Date,Type,Name,Quantity}=req.body;
+    const search = await prisma .supplier.findFirst({where:{Name}})
+    if (!search){
+    
+const create = await prisma.supplier.create({data:{RealAmount,Date,Type,Name,Quantity}})
+res.status(200).json(create)
+
+}
+else{
+    res.status(301).json("found")
+
+// await prisma.supplier.update({where:{Name:Name}})
+
+
+}
+
+} catch (error) {
+res.status(301).json(error)        
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async BuyfromSupplier (req,res)
+
+
+
+
+
+async paysupplier(req,res){
+const {CreditAmount,DebitAmount,CreditName,DebitName}=req.body;
+    try {
+        const createdobuleentry = await prisma.double_Entry.create({data:{CreditAmount,DebitAmount,CreditName,DebitName,CreditType:"سداد مورد"}})
+    // const search = await prisma .supplier.findFirst({where:{Name:CreditName}})
+    
+
+const create = await prisma.supplier.update({where:{Name:CreditName},data:{RealAmount:{decrement:CreditAmount}}});
+ await prisma.debt.update({where:{SupplierID:create.id},data:{Amount:{decrement:CreditAmount}}})
+
+res.status(200).json(create)
+
+
+} catch (error) {
+res.status(301).json(error)        
+}
+}
+
+
+
+
+
 
 
 

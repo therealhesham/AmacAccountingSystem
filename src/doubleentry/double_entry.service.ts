@@ -20,17 +20,12 @@ async gettransactions(){
 }
 
 async Transact(req,res){
-// console.log(CreditAmount)
-// console.log(DebitAmount)
-// waiterwaiter
 const {CreditName,DebitName,CreditAmount,DebitAmount,CreditType,Notes,date,id}=req.body;
-
-// console.log(CreditAmount == DebitAmount)
 
 if(CreditAmount != DebitAmount) return res.status(301).json({error:"CreditAmount is not equal Debit Amount"})      
 
 const findSafe = await prisma.safe.findFirst({where:{Date:new Date().toLocaleDateString()}})
-
+console.log(findSafe)
 // if(!findSafe) return   res.status(301).json({error:"safe is not found , call adminstrator"})
 if((findSafe.Quantity - CreditAmount) < 0 )return res.status(301).json({error:"safe is not found , call adminstrator"})
 async function transfer( amount: number) {

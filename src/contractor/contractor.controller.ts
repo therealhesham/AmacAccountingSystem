@@ -15,7 +15,7 @@ constructor(  public contractorService : ContractorService ){}
 FindTotal(@Param() param:string , @Res() res:Response){
 // new PrismaClient().pettyCash.deleteMany()
 return this.contractorService.GetSpecificInfo(param,res)
-
+// prisma.contractor.create({include:{Invoices:{}}})
 
 }
 

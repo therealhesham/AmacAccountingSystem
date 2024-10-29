@@ -41,7 +41,8 @@ model Supplier {
   Quantity   String? //what he supplied as a material
   Unit       String?
   Price      String?
-  RealAmount Float?
+  RealAmount Float? 
+  Debt debt[]
 }
 
 model Bank_Account {
@@ -51,6 +52,13 @@ model Bank_Account {
   Quantity Float
   Date     String? @unique
 }
+
+
+
+// model Aggregation {
+//   id       String  @id @default(auto()) @map("_id") @db.ObjectId
+//  Sum Float 
+// }
 
 model Safe {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -65,7 +73,6 @@ model Double_Entry {
   CreditName   String
   DebitName    String
   CreditAmount Int
-
   DebitAmount     Int
   Notes           String?
   date            String?
@@ -93,8 +100,8 @@ model Legacy_Double_Entry {
   Notes           String?
   date            String?
   settled         Boolean?
-  unix_time_stamp DateTime @default(now())
   transferred     Boolean?
+  // CreatedAt    DateTime  @default(now())
 }
 
 model Asset {
@@ -112,13 +119,34 @@ model Benefiary {
 
   NewpettyCash PettyCash[]
 }
-
+model Rent{
+id String @id @map("_id") @db.ObjectId @default(auto())
+type String? //شهري او يومي
+Cost String?
+duration Float
+paydate String
+Debt debt[]
+ContractStart String
+ContractEnd String
+}
+model debt{
+id String @id @map("_id") @db.ObjectId @default(auto())
+type String?
+Amount Float?
+Name String?
+Rent Rent? @relation(fields: [DebtID],references: [id])
+DebtID String? @db.ObjectId 
+SupplierID String? @db.ObjectId @unique
+Supplier Supplier? @relation(fields: [SupplierID],references: [id])
+}
 model Settlement {
   id            String    @id @default(auto()) @map("_id") @db.ObjectId
-  Clauses       String
-  Amount        Float
-  BeneficiaryID Benefiary @relation(fields: [BenefciaryID], references: [Name])
-  BenefciaryID  String
+  Clauses       String?
+  workplace     String?
+  Amount        Float?
+  details       String?
+  BeneficiaryID Benefiary? @relation(fields: [BenefciaryID], references: [Name])
+  BenefciaryID  String?
   Date          String?
 }
 

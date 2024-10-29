@@ -30,8 +30,9 @@ return this.BenefiaryService.GetBeneficiary(res);
 }
 
 @Get("/totalamount/:id")
-FindTotal(@Param() param:string , @Res() res:Response){
+FindTotal(@Param() param , @Res() res:Response){
 // new PrismaClient().pettyCash.deleteMany()
+console.log(param,"ss")
 return this.BenefiaryService.GetTotalAmount(param,res)
 
 }
@@ -42,6 +43,18 @@ FindNotSettled(@Param() param:string , @Res() res:Response){
 return this.BenefiaryService.FindNotSettled(param,res)
 
 }
+
+
+@Get("/engineerinfo/:id")
+FindBeneficiary(@Param() param:string , @Res() res:Response){
+// new PrismaClient().pettyCash.deleteMany()
+return this.BenefiaryService.GetSpecificInfo(param,res)
+
+
+}
+
+
+
 
 @Post("/")
 AddBeneficiary(@Req() req:Request,@Res() res:Response){

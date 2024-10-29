@@ -93,7 +93,7 @@ res.status(200).json(waiter.reverse())
 
 async Settle(req,res){
     console.log(req.body)
-const {Clauses,Amount,Name}=req.body
+const {workplace,Clauses,Amount,Name,details}=req.body
 try{
 return await prisma.$transaction(async (tx)=>{
 const f = await tx.benefiary.findUnique({where:{Name:Name}})
@@ -111,7 +111,7 @@ const awaiter = await tx.benefiary.update({where:{Name:Name},data:{Amount:{decre
     (Amount)}}})
 
 
-const waiter = await tx.settlement.create({data:{Clauses,Amount:parseFloat(Amount),BenefciaryID:Name,Date:new Date().toLocaleDateString()}})
+const waiter = await tx.settlement.create({data:{details,workplace,Clauses,Amount:parseFloat(Amount),BenefciaryID:Name,Date:new Date().toLocaleDateString()}})
 res.status(200).json(awaiter)   
 
 // return "awaiter.Amount"
@@ -122,7 +122,7 @@ res.status(200).json(awaiter)
     })
 
 } catch (error) {
-    console.error(error)
+    console.error(error.message)
  res.status(301).json(error)   
 }
 
