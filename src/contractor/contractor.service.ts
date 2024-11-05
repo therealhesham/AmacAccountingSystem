@@ -6,14 +6,14 @@ const prisma = new PrismaClient()
 export class ContractorService {
 
 async Addinvoice(req,res){
-const {Amount,InvoiceNO,ContractodID,Adminstrative,BasicTotal,Insurance,Total,WorkPlace} = req.body;
+const {Amount,InvoiceNO,ContractodID,Adminstrative,invoiceTotal,BasicTotal,Insurance,Total,WorkPlace,StoreTransactions,fund} = req.body;
 try {
-
-    const createInvoice = await prisma.invoices.create({data:{InvoiceNO,ContractodID,Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal),WorkPlace}})
-const increment = await prisma.contractor.update({where:{id:ContractodID},data:{TotalInvoice:{increment:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal)}}})
+console.log(parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal)-(parseFloat(fund)*BasicTotal)-parseFloat(StoreTransactions))
+    const createInvoice = await prisma.invoices.create({data:{InvoiceNO,ContractodID,StoreTransactions:parseFloat(StoreTransactions),Fund:parseFloat(fund),Adminstrative:parseFloat(Adminstrative),BasicTotal:parseFloat(BasicTotal),Insurance:parseFloat(Insurance),Total:parseFloat(BasicTotal)-(Insurance*BasicTotal)-(Adminstrative*BasicTotal),WorkPlace}})
+const increment = await prisma.contractor.update({where:{id:ContractodID},data:{TotalInvoice:parseInt(invoiceTotal)}})
     res.status(200).json(createInvoice)
 } catch (error) {
-    // console.log(error)
+    console.log(error)
 res.status(301).json(error)
     
 }

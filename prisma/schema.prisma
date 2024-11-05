@@ -171,6 +171,8 @@ model Invoices {
   id            String     @id @default(auto()) @map("_id") @db.ObjectId
   Contractor    Contractor @relation(fields: [ContractodID], references: [id], onDelete: Cascade)
   ContractodID  String     @db.ObjectId
+  Fund          Float?
+  StoreTransactions Float?
   Amount        Float?
   InvoiceNO     Int?
   BasicTotal    Float?
